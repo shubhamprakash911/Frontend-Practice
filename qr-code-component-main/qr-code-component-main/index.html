@@ -24,22 +24,28 @@
       .attribution a {
         color: hsl(228, 45%, 44%);
       }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
       .container {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        color: hsl(0, 0%, 100%);
+        /* color: hsl(0, 0%, 100%); */
       }
 
       .qr-code {
         width: 320px;
         height: 499px;
-        border: 1px solid hsl(0, 0%, 59%);
         border-radius: 10px;
         overflow: hidden;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         padding: 1rem;
-        margin-bottom: 1.5rem;
       }
 
       .qr-code img {
@@ -52,6 +58,7 @@
       }
 
       .info p:nth-child(1) {
+        margin-top: 1.5rem;
         font-size: 1.375rem;
         text-align: center;
         font-weight: 700;
