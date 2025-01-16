@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Young+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="./output.css" />
+    <style>
+      .icon-active {
+        filter: brightness(0%) invert(100%);
+      }
+    </style>
+
+    <title>Frontend Mentor | Article preview component</title>
+  </head>
+  <body class="bg-gray-100">
+    <div
+      class="sm:flex sm:h-screen justify-center items-center max-sm:mx-6 max-sm:my-20"
+    >
+      <div class="bg-white shadow rounded-lg sm:flex sm:w-[45.625rem]">
+        <img
+          src="./images/drawers.jpg"
+          alt="drawers"
+          class="sm:w-80 rounded-l-lg sm:[clip-path:inset(0_36px_0_0)]"
+        />
+        <div class="sm:relative">
+          <div class="p-9 sm:pl-0 pb-0">
+            <div class="font-bold text-gray-600 text-xl">
+              Shift the overall look and feel by adding these wonderful touches
+              to furniture in your home
+            </div>
+            <div class="my-4 text-gray-500 text-sm font-medium">
+              Ever been in a room and felt like something was missing? Perhaps
+              it felt slightly bare and uninviting. I’ve got some simple tips to
+              help you make any room feel complete.
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between items-center m-9 ml-0"
+            id="user-container"
+          >
+            <div class="flex items-center w-44 justify-between" id="author">
+              <img
+                src="./images/avatar-michelle.jpg"
+                alt=""
+                class="rounded-full w-11"
+              />
+              <div>
+                <div class="text-gray-600 font-bold text-sm">
+                  Michelle Appleton
+                </div>
+                <div class="text-gray-500">28 Jun 2020</div>
+              </div>
+            </div>
+
+            <div
+              class="sm:absolute bg-gray-600 w-52 py-4 px-6 bottom-[6.5rem] right-[-3.125rem] rounded-lg"
+              id="share-info"
+            >
+              <div class="flex justify-between">
+                <div class="text-gray-200 text-sm">S H A R E</div>
+                <img src="./images/icon-facebook.svg" alt="facebook" />
+                <img src="./images/icon-twitter.svg" alt="twitter" />
+                <img src="./images/icon-pinterest.svg" alt="pinterest" />
+              </div>
+              <div
+                class="w-4 h-4 bg-gray-600 absolute ml-auto mr-auto left-0 right-0 -bottom-2 rotate-45"
+              ></div>
+            </div>
+
+            <button
+              class="rounded-full bg-slate-200 w-9 h-9 flex items-center justify-center"
+              id="share-button"
+            >
+              <img
+                src="./images/icon-share.svg"
+                alt="share"
+                class="w-4"
+                id="share-icon"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const button = document.getElementById("share-button");
+      const icon = document.getElementById("share-icon");
+      const author = document.getElementById("author");
+      const userContainer = document.getElementById("user-container");
+      const shareInfo = document.getElementById("share-info");
+
+      // Function to check screen size and adjust the author visibility
+      function handleResize() {
+        if (window.innerWidth > 640) {
+          // If screen is larger than 640px, show the author element
+          author.style.display = "flex";
+          userContainer.style.backgroundColor = "white";
+        } else {
+          userContainer.style.margin = "2.2rem";
+          // If screen is smaller than 640px, hide the author element if the icon is active
+          if (icon.classList.contains("icon-active")) {
+            author.style.display = "none";
+            userContainer.style.backgroundColor = "#4b5563";
+            userContainer.style.marginLeft = 0;
+          } else {
+            author.style.display = "flex";
+            userContainer.style.backgroundColor = "white";
+            shareInfo.style.display = "none";
+          }
+        }
+      }
+
+      button.addEventListener("click", () => {
+        icon.classList.toggle("icon-active");
+        button.classList.toggle("bg-slate-500");
+
+        if (window.innerWidth <= 640) {
+          userContainer.style.margin = "2.2rem";
+          // Hide or show the author element based on its current state
+          if (author.style.display === "none") {
+            author.style.display = "flex";
+            userContainer.style.backgroundColor = "white";
+            shareInfo.style.display = "none";
+          } else {
+            author.style.display = "none";
+            userContainer.style.backgroundColor = "#4b5563";
+            shareInfo.style.display = "block";
+          }
+        } else {
+          // if the screen is larger than 640px and the icon is not active then hide the share-info
+          if (!icon.classList.contains("icon-active")) {
+            shareInfo.style.display = "none";
+          } else {
+            shareInfo.style.display = "block";
+          }
+        }
+      });
+
+      // Add event listener for window resize
+      window.addEventListener("resize", handleResize);
+
+      // Initial call to set the correct state based on the initial screen size
+      handleResize();
+    </script>
+  </body>
+</html>
