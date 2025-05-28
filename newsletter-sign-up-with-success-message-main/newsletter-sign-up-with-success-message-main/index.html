@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <title>
+      Frontend Mentor | Newsletter sign-up form with success message
+    </title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="font-roboto bg-gray-600">
+    <div class="sm:flex justify-center items-center h-screen">
+      <div
+        id="newsletter-signup"
+        class="sm:p-4 sm:pl-0 sm:w-[46rem] rounded-2xl sm:flex sm:flex-row-reverse bg-white"
+      >
+        <!-- Desktop image: hidden on mobile, visible on sm breakpoint and up -->
+        <img
+          src="/assets/images/illustration-sign-up-desktop.svg"
+          alt="Sign up illustration"
+          class="hidden sm:block object-cover w-66"
+        />
+
+        <!-- Mobile image: visible on mobile, hidden on sm breakpoint and up -->
+        <img
+          src="/assets/images/illustration-sign-up-mobile.svg"
+          alt="Sign up illustration"
+          class="block sm:hidden w-full"
+        />
+
+        <div class="p-12">
+          <h1 class="text-4xl font-bold">Stay updated!</h1>
+          <p class="mt-4 font-normal">
+            Join 60,000+ product managers receiving monthly updates on:
+          </p>
+
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start">
+              <img
+                src="./assets/images/icon-list.svg"
+                alt=""
+                class="mr-3 flex-shrink-0"
+                aria-hidden="true"
+              />
+              <span>Product discovery and building what matters</span>
+            </li>
+            <li class="flex items-start">
+              <img
+                src="./assets/images/icon-list.svg"
+                alt=""
+                class="mr-3 flex-shrink-0"
+                aria-hidden="true"
+              />
+              <span>Measuring to ensure updates are a success</span>
+            </li>
+            <li class="flex items-start">
+              <img
+                src="./assets/images/icon-list.svg"
+                alt=""
+                class="mr-3 flex-shrink-0"
+                aria-hidden="true"
+              />
+              <span>And much more!</span>
+            </li>
+          </ul>
+          <form class="mt-8">
+            <div class="flex justify-between items-center mb-2">
+              <label for="email" class="text-sm font-bold">
+                Email address
+              </label>
+              <div id="error-msg" class="text-red-500 text-sm hidden">
+                Valid email required
+              </div>
+            </div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="email@company.com"
+              class="p-4 border rounded-md w-full cursor-pointer invalid:border-e-red-400 invalid:text-red-500 focus:invalid:bg-red-100 focus:invalid:outline-red-500"
+            />
+
+            <button
+              class="bg-[color:hsl(235,18%,26%)] text-white hover:bg-[hsl(4,100%,67%)] p-4 rounded-md cursor-pointer mt-4 w-full transition-colors duration-300 ease-in-out"
+            >
+              Subscribe to monthly newsletter
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal Overlay -->
+    <div
+      id="success-popup"
+      class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 items-center justify-center z-50"
+    >
+      <div
+        class="bg-white sm:rounded-3xl p-12 sm:max-w-md sm:mx-4 sm:shadow-2xl h-full sm:h-auto"
+      >
+        <!-- Success Icon -->
+        <div
+          class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mb-8"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-4xl font-bold text-gray-800 mb-6">
+          Thanks for subscribing!
+        </h2>
+
+        <!-- Message -->
+        <p class="text-gray-600 mb-8 leading-relaxed">
+          A confirmation email has been sent to
+          <span id="email-display" class="font-bold text-gray-800"></span>.
+          Please open it and click the button inside to confirm your
+          subscription.
+        </p>
+
+        <!-- Dismiss Button -->
+        <button
+          id="dismiss-btn"
+          class="w-full bg-gray-800 hover:bg-red-500 text-white font-bold py-4 px-6 rounded-lg transition-colors duration-300 fixed sm:relative bottom-4 left-0.5"
+        >
+          Dismiss message
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const emailInput = document.getElementById("email");
+      const errorMsg = document.getElementById("error-msg");
+      const successPopup = document.getElementById("success-popup");
+      const emailDisplay = document.getElementById("email-display");
+      const dismissBtn = document.getElementById("dismiss-btn");
+      const form = document.querySelector("form");
+
+      // Function to toggle error message visibility
+      function toggleErrorMessage() {
+        if (emailInput.checkValidity()) {
+          errorMsg.classList.add("hidden");
+        } else {
+          errorMsg.classList.remove("hidden");
+        }
+      }
+
+      // Show error message on input event (as user types)
+      emailInput.addEventListener("input", toggleErrorMessage);
+
+      // Show error message on blur event (when user leaves the field)
+      emailInput.addEventListener("blur", toggleErrorMessage);
+
+      // Handle form submission
+      form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent form submission
+
+        if (!emailInput.checkValidity()) {
+          // If email is invalid, show error message
+          errorMsg.classList.remove("hidden");
+        } else {
+          // If email is valid, show success modal
+          emailDisplay.textContent = emailInput.value;
+          successPopup.classList.remove("hidden");
+          successPopup.classList.add("sm:flex");
+        }
+      });
+
+      // Handle dismiss button click
+      dismissBtn.addEventListener("click", function () {
+        successPopup.classList.add("hidden");
+        successPopup.classList.remove("sm:flex");
+        form.reset();
+      });
+
+      // Close modal when clicking outside
+      successPopup.addEventListener("click", function (e) {
+        if (e.target === successPopup) {
+          successPopup.classList.add("hidden");
+          form.reset();
+        }
+      });
+    </script>
+  </body>
+</html>
