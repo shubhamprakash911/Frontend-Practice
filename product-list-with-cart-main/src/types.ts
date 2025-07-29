@@ -15,3 +15,23 @@ export type ProductProps = {
 };
 
 export type CartItem = ProductItem & { quantity: number };
+
+export type ProductButtonProps = {
+  product: ProductItem;
+  cartItem: CartItem | undefined;
+  addToCart: (product: ProductItem) => void;
+  updateQuantity: (productName: string, amount: number) => void;
+};
+
+export type ProductListProps = {
+  products: ProductItem[];
+  cart: CartItem[];
+  addToCart: (product: ProductItem) => void;
+  updateQuantity: (productName: string, amount: number) => void;
+};
+
+export type CartProps = {
+  cart: CartItem[];
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  onConfirmOrder: () => void;
+};
